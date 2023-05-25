@@ -1,0 +1,29 @@
+CREATE TABLE ContactTable (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   name TEXT,
+   number TEXT,
+   email TEXT,
+   address TEXT
+);
+
+getAllContact:
+SELECT * FROM ContactTable;
+
+insertContact:
+INSERT INTO ContactTable(name, number, email, address)
+VALUES (?, ?, ?, ?);
+
+insertFullContact:
+INSERT INTO ContactTable(id, name, number, email, address)
+VALUES ?;
+
+deleteContact:
+DELETE FROM ContactTable WHERE ContactTable.id == ?;
+
+deleteAllContact:
+DELETE FROM ContactTable;
+
+updateContact:
+UPDATE ContactTable
+SET name = ?, number = ?, email = ?, address = ?
+WHERE ContactTable.id == ?;
