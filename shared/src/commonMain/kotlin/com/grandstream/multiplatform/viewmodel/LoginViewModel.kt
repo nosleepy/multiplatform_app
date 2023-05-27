@@ -24,7 +24,7 @@ class LoginViewModel: ViewModel() {
             return
         } else if (password.isEmpty()) {
             result = "password is empty"
-            result
+            return
         }
         if (username.trim() == "admin" && password.trim() == "123456") {
             result = "success"
