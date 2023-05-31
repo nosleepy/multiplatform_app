@@ -7,8 +7,6 @@ plugins {
 //    id("io.ktor.plugin")
 }
 
-val ktorVersion = "2.2.4"
-
 kotlin {
     android()
     
@@ -38,29 +36,40 @@ kotlin {
 //                implementation(compose.preview)
 //                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
 //                implementation(compose.material3)
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                api("io.ktor:ktor-client-core:$ktorVersion")
-                api("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                api("io.ktor:ktor-client-logging:$ktorVersion")
-                api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-                implementation("app.cash.sqldelight:runtime:2.0.0-alpha05")
-                implementation("app.cash.sqldelight:coroutines-extensions:2.0.0-alpha05")
-                api("io.github.aakira:napier:2.6.1")
-                api("moe.tlaster:precompose:1.4.1")
-//                api("moe.tlaster:precompose-molecule:1.4.1")
-                api("moe.tlaster:precompose-viewmodel:1.4.1")
-                api("io.insert-koin:koin-core:3.4.0")
+                with(Deps.Ktor) {
+                    api(clientCore)
+                    api(clientNegotiation)
+                    api(clientLogging)
+                    api(json)
+                }
+                with(Deps.SqlDelight) {
+                    implementation(runtime)
+                    implementation(coroutinesExtensions)
+                }
+                with(Deps.Kotlinx) {
+                    api(coroutinesCore)
+                }
+                with(Deps.Koin) {
+                    api(koinCore)
+                }
+                with(Deps.PreCompose) {
+                    api(core)
+                    api(viewmodel)
+                }
+                with(Deps.Napier) {
+                    api(core)
+                }
             }
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.activity:activity-compose:1.6.1")
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.9.0")
-                api("androidx.compose.ui:ui-tooling-preview:1.2.1")
+                implementation(Deps.Ktor.clientAndroid)
+                implementation(Deps.SqlDelight.androidDriver)
+                api(Deps.Androidx.activityCompose)
+                api(Deps.Androidx.coreKtx)
+                api(Deps.Androidx.appcompat)
+                api(Deps.Androidx.preview)
                 api("com.blankj:utilcode:1.30.7")
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("app.cash.sqldelight:android-driver:2.0.0-alpha05")
             }
         }
         val iosX64Main by getting
@@ -68,7 +77,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+                implementation(Deps.Ktor.clientDarwin)
             }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
@@ -77,16 +86,16 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-js:$ktorVersion")
-                implementation("app.cash.sqldelight:sqljs-driver:2.0.0-alpha05")
+                implementation(Deps.Ktor.clientJs)
+                implementation(Deps.SqlDelight.jsDriver)
                 implementation(npm("sql.js", "1.6.2"))
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             }
         }
         val desktopMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-java:$ktorVersion")
-                implementation("app.cash.sqldelight:sqlite-driver:2.0.0-alpha05")
+                implementation(Deps.Ktor.clientJava)
+                implementation(Deps.SqlDelight.javaDriver)
             }
         }
     }
