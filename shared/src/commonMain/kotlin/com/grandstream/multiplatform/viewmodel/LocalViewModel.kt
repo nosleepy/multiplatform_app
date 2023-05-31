@@ -1,30 +1,30 @@
 package com.grandstream.multiplatform.viewmodel
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import com.grandstream.multiplatform.entity.Contact
-import com.grandstream.multiplatform.util.DatabaseUtil
-import kotlinx.coroutines.Dispatchers
+import com.grandstream.multiplatform.repository.IContactRepository
 import kotlinx.coroutines.launch
-
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import kotlin.js.ExperimentalJsExport
 
 
-class LocalViewModel: ViewModel() {
-    val localFlow = DatabaseUtil.dbQuery.getAllContact().asFlow().mapToList(Dispatchers.Default)
+@OptIn(ExperimentalJsExport::class)
+class LocalViewModel: ViewModel(), KoinComponent {
+    private val contactRepository: IContactRepository by lazy { get() }
+    val localFlow = contactRepository.getAllContact()
 
     fun onLocalDelete(id: Long) {
         viewModelScope.launch {
-            DatabaseUtil.dbQuery.deleteContact(id)
+            contactRepository.deleteContact(id)
         }
     }
 
     @OptIn(ExperimentalJsExport::class)
     fun onLocalUpdate(contact: Contact) {
         viewModelScope.launch {
-            DatabaseUtil.dbQuery.updateContact(contact.name, contact.number, contact.email, contact.address, contact.id)
+            contactRepository.updateContact(contact)
         }
     }
 }

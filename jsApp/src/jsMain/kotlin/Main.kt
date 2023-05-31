@@ -9,6 +9,7 @@ import app.cash.sqldelight.db.SqlDriver
 import com.grandstream.multiplatform.MainView
 import org.jetbrains.skiko.wasm.onWasmReady
 import com.grandstream.multiplatform.createDriverPromise
+import com.grandstream.multiplatform.di.initKoin
 import com.grandstream.multiplatform.entity.Contact
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -50,6 +51,7 @@ fun composableResize(layer: ComposeLayer) {
 //一、Compose-Android写法
 @OptIn(ExperimentalJsExport::class)
 fun main() {
+    initKoin()
     Napier.base(DebugAntilog())
     val promise: Promise<SqlDriver> = createDriverPromise()
     promise.then {

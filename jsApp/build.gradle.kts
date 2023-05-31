@@ -13,8 +13,7 @@ kotlin {
             dependencies {
                 implementation(project(":shared"))
                 implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.8.0")
-                implementation(compose.ui)
-                implementation(compose.web.core)
+                implementation(compose.html.core)
                 implementation(compose.runtime)
             }
         }

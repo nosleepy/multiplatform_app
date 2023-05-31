@@ -39,15 +39,17 @@ kotlin {
 //                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
 //                implementation(compose.material3)
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                api("io.ktor:ktor-client-core:$ktorVersion")
+                api("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                api("io.ktor:ktor-client-logging:$ktorVersion")
+                api("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("app.cash.sqldelight:runtime:2.0.0-alpha05")
                 implementation("app.cash.sqldelight:coroutines-extensions:2.0.0-alpha05")
                 api("io.github.aakira:napier:2.6.1")
                 api("moe.tlaster:precompose:1.4.1")
 //                api("moe.tlaster:precompose-molecule:1.4.1")
                 api("moe.tlaster:precompose-viewmodel:1.4.1")
+                api("io.insert-koin:koin-core:3.4.0")
             }
         }
         val androidMain by getting {
